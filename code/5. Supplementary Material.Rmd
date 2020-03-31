@@ -145,7 +145,7 @@ for (i in 1:length(Sites[])) {
   
 PLOT1/PLOT2+plot_layout(ncol = 1, heights = c(0.8, 0.2))
 
-setwd("~/capsule/results/Supplementary Material/1. Aperture Sizes")
+setwd("~/Farasan-Shell-Data-master/results/Supplementary Material/1. Aperture Sizes")#Remember to change the file path
 ggsave(paste0("Aperture_Plot_",names(Sites[i]),".pdf"),height = 10, width = 5)
 
 }
@@ -351,7 +351,7 @@ PLOT5 <-  ggplot(SW_CFP[SW_CFP$Site==names(Apertures[i]),], aes(
 
 PLOT1+PLOT2+PLOT3+PLOT4+PLOT5+plot_layout(ncol = 5)
 
-setwd("~/capsule/results/Supplementary Material/2. Site-based Diversity")
+setwd("~/Farasan-Shell-Data-master/results/Supplementary Material/2. Site-based Diversity")
 
 ggsave(paste0("Diversity_Indeces_in_",names(Apertures[i]),".pdf"),height= 8, width = 18)
 
@@ -450,7 +450,7 @@ PLOT1 <- ggplot(Ranks[Ranks$Site==rownames(SW[i,]),]
 
 PLOT1+plot_annotation(subtitle = "Only names for species with >2% weight percentage displayed" )
 
-setwd("~/capsule/results/Supplementary Material/3. Species ranks by site")
+setwd("~/Farasan-Shell-Data-master/results/Supplementary Material/3. Species ranks by site")
 ggsave(paste0("Species_ranks_in_",names(Sites[i]),".pdf"),height= 10, width = 10)
 
 }
