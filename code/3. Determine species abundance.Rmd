@@ -191,7 +191,7 @@ Fig4 <- KM + JW + JE +
         subtitle = 'Percentages are based on weight')
 Fig4
 
-setwd("~/capsule/results")
+setwd("~/Farasan-Shell-Data-master/results") #Remember to change the file path so that it fits with your system
 ggsave("Figure_4.png", height = 100, width = 300, units = "mm")
 ```
 
@@ -270,6 +270,6 @@ library(patchwork)
 Fig5 + plot_annotation(
   title = 'Species abundances between areas',
   subtitle = 'Named species are above 2% in percentage by weight')
-setwd("~/capsule/results")
+setwd("~/Farasan-Shell-Data-master/results")
 ggsave("Figure_5.png", height = 150, width = 300, units = "mm")
 ```
