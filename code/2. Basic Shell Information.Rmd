@@ -1,0 +1,147 @@
+---
+title: "Basics Shell Information"
+author: "Niklas Hausmann"
+date: "13/03/2020"
+output: html_document
+---
+# Introduction
+This file describes the calculation of the basic data provided in Table 1 of the paper (i.e. the **total shell weight** and the **number of aperture measurements**).
+
+First, we need to source the `Farasan Database.R` file through:
+```{r message=FALSE, warning=FALSE}
+source('Farasan Database.R')
+```
+The file path related to here, is the one for the [virtual computer](https://codeocean.com/capsule/0588419/tree) in [Codeocean](https://codeocean.com) DOI:  
+When you download the supplementary, this file path might need to be changed.
+
+From the 4 lists that you receive, we will work with `Sites` for the **total shell weight** and with `Apertures` for the **number of aperture measurements**.
+
+## Total shell weight
+
+Using a for-loop, we will put the shell weight data from the lists into a new dataframe called `SW`. This dataframe includes shell weights in grams ordered by site, bulk sample number and shellfish species.  
+
+```{r echo=TRUE}
+SW <- data.frame()#real dataframe
+f <- data.frame()#temporary dataframe only used in loop
+
+for (i in 1:length(Species))  {
+  for (j in 1:length(Species[[i]]))  {
+    for (k in 1:length(Species[[i]][[j]])) {
+      f <-
+        data.frame(c(as.character(names(Species[i]))), c(as.character(names(Species[[i]][j]))), c(as.character(names(Species[[i]][[j]][k]))),as.numeric(Species[[i]][[j]][[k]]))
+      colnames(f) <- c('Site', 'Sample', 'Species','Weight')
+      SW <- rbind(SW, f)
+    }
+  }
+}
+rm(f, i, j,k, Areas, Sites)
+
+```
+
+```{r echo=FALSE}
+SW[1:5,1:4]
+```
+
+Sadly, the species names are imported somewhat awkwardly. On top of that, these names are not always identical between sites and shells of the same species can end up in different categories. This is why we cleaned up the names for the most abundant species using the `Replacement.R` script. Which you can simply source to make the names more conform.
+
+
+```{r}
+source('Replacement.R')
+
+```
+
+This did not change the species but added another column called `Speciesname`.
+```{r echo=FALSE}
+SW[1:5,1:5]
+```
+
+Some of the weights were measured using different scales. This was problematic, because some weights were too small to be registered by the scale we used in the field, and we had averaged their weight to 0.5 g. Following further analysis in the York laboratory with an improved scale, these weights turned out to be much lower, and we thus applied an average value of 0.25 g for those 0.5 g values.
+
+```{r}
+SW$Weight[SW$Weight==0.5] <- 0.25 #Change 0.5 weights to 0.25 weights 
+
+```
+Next, we restructured the dataframe to provide information for each sample as a whole. 
+```{r}
+SW <- spread(SW,Speciesname,Weight,
+             fill = 0) # Because not all bulk samples included all shell species available around Farasan, they show `NA` in those fields. To better work with these instances, we had to set their weight value to 0.
+```
+
+```{r echo=FALSE}
+SW[1:6,c(1:2,4,6)]
+```
+
+We then want to combine those species-weights by sample into species-weights per site:
+```{r}
+SW <- aggregate(SW[,4:155], by=list(SW$Site), FUN = sum)
+colnames(SW)[1] <- c("Site")
+
+```
+
+```{r echo=FALSE}
+SW[1:6,1:2]
+```
+
+However, we accidentally had the site JW1727 still split into its two columns A and B. 
+
+```{r echo=FALSE}
+SW[38:39,1:2]
+```
+
+These need combining. We are sure there is a simpler way of doing this, but we struggled with the levels, so we added the values of both columns in the row of column A, and added a new level to the `SW` dataframe called `JW1727`, which we then used to rename the row of column A. 
+
+```{r}
+SW[38,2:173] <- SW[SW$Site=="JW1727_A",2:153]+SW[SW$Site=="JW1727_B",2:153] #Sum up each columns' values for species weight
+SW <- rbind(SW[1:38,],SW[40:49,]) #removing the row for column B
+
+levels(SW$Site) <- c(levels(SW$Site), "JW1727")    # adding a new level
+SW[38,1] <- "JW1727" #renaming the row of column A to the site's name
+
+```
+
+```{r echo=FALSE}
+SW[38,1:2]
+```
+Lastly, using the **Janitor** package and `add_totals_col()`, we added the total value of all columns with weight values to the end of the dataframe. This is the data you find in Table 1 of the paper.
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(janitor)
+SW <-  add_totals_col(SW)
+Table1data <- data.frame('Site'=SW[,1],'Total weight'=SW[,174])
+Table1data[38:43,]
+```
+
+## Number of Apertures
+Similar to the way we extracted shell weights from the `Sites` list above, we now extract aperture data from the `Apertures` list.For this step we use a for-loop again to fill the aperture data into a dataframe called `Aps`, which will contain measurements in mm grouped by site, bulk sample number:
+```{r}
+Aps <- data.frame()
+f <- data.frame()
+
+for (i in 1:length(Apertures))  {
+  for (j in 1:length(Apertures[[i]]))  {
+    if ("Strombus.fasciatus..............Born.1778..Aperture" %in% names(Apertures[[i]][[j]]) == FALSE) {
+      next
+    }
+    f <-
+      data.frame(c(as.character(names(Apertures[i]))), c(as.character(names(Apertures[[i]][j]))), Apertures[[i]][[j]][["Strombus.fasciatus..............Born.1778..Aperture"]])
+    colnames(f) <- c('Site', 'Sample', 'Aperture')
+    Aps <- rbind(Aps, f)
+  }
+}
+rm(f, i, j)
+
+head(Aps)
+
+```
+
+The resulting dataframe can then be used to summarise the data through the `summarySE.R` function
+
+```{r}
+source("~/Farasan-Shell-Data-master/code/summarySE.R")
+
+Aps <-summarySE(na.omit(Aps), measurevar = "Aperture", groupvars = c("Site"))
+head(Aps)
+
+```
+
+
+
