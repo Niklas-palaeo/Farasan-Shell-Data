@@ -1,7 +1,7 @@
 Shellfish Resilience to Prehistoric Human consumption in the southern Red Sea
 =============================================================================
 
-This compendium contains the code and data to reproduce some of the figures and statstical data discussed in the article:
+This compendium contains the code and data to reproduce some of the figures and statistical data discussed in the article:
 
 `Hausmann, N., Meredith-Williams, M., and Laurie, E. (in review) Shellfish Resilience to Prehistoric Human consumption in the southern Red Sea. Quaternary international`
 
