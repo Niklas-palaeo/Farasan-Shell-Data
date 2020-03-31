@@ -17,11 +17,10 @@ library(purrr)
 
 
 ## Importing data from .csv files
-All .csv files are located in the folder *CSV Exports*. So the first step is to set the working directory to that folder. The file path related to here, is the one for the [virtual computer](https://https://codeocean.com/capsule/0588419/tree) in [Codeocean](https://codeocean.com) DOI:  
-When you download the supplementary, the file path below will need to be changed.
+All .csv files are located in the folder *CSV Exports*. So the first step is to set the working directory to that folder. 
 
 ```{r eval=FALSE, include=TRUE}
-setwd("~/capsule/data/CSV Exports")
+setwd("~/data/CSV Exports")
 ```
 
 The steps in the file are all essentially the same process over and over again, and should really be a loop or a function. It just happened to be difficult to make any process work for each .csv file and sometimes special solutions needed to be found, because the .csv files had inconsistent formatting. So now these files are all imported individually. That said, this import will happen in the background without you noticing, so it shouldn't be a problem.  
@@ -39,7 +38,7 @@ If you run the code below, you will get a list of all bulk samples in JW1864 wit
 
 ```{r Example data import}
 #Data from Janaba West
-setwd("~/capsule/data/CSV Exports")
+setwd("~/data/CSV Exports")
 #JW1864####
     #This is the species data
 JW1864 <- read.csv("JW1864.csv")
