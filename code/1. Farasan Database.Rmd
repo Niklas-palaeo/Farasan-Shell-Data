@@ -17,7 +17,7 @@ library(purrr)
 
 
 ## Importing data from .csv files
-All .csv files are located in the folder *CSV Exports*. So the first step is to set the working directory to that folder. 
+All .csv files are located in the folder *CSV Exports*. So the first step is to set the working directory to that folder. But before you do that, you need to change the file path, so that it fits with where you downloaded this folder. RStudio has an option in the "Files" panel which will tell you the whole command, but you will have to put it into the chunk below as well as wherever it comes up in the walkthroughs. A simple find&replace should do the trick!
 
 ```{r eval=FALSE, include=TRUE}
 setwd("~/data/CSV Exports")
