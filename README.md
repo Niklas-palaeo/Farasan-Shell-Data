@@ -5,7 +5,7 @@ This compendium contains the code and data to reproduce some of the figures and 
 
 `Hausmann, N., Meredith-Williams, M., and Laurie, E. (in review) Shellfish Resilience to Prehistoric Human consumption in the southern Red Sea. Quaternary international`
 
-The data itself is citeable using this [![DOI](https://zenodo.org/badge/248758954.svg)](https://zenodo.org/badge/latestdoi/248758954)
+The data itself is citeable using this [![ DOI](https://zenodo.org/badge/248758954.svg)](https://zenodo.org/badge/latestdoi/248758954)
 
 
 How to run
