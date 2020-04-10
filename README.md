@@ -11,7 +11,7 @@ The data itself is citeable using this [![ DOI](https://zenodo.org/badge/2487589
 How to run
 ------------------------
 
-I suggest to run the code by downloading the entire repository and executing the steps on your own PC. This will require some changing of the paths, but should be too difficult. If you don’t want to run anything yourself, or if there is an error, you can see the finished figures in the “Figures and supplementary Material” folder and the individual tutorials that explain how to create them in the “Walkthrough” folder.
+I suggest to run the code by downloading the entire repository and executing the steps on your own PC. This will require some changing of the file paths, but should not be too difficult. If you don’t want to run anything yourself, or if there is an error, you can see the finished figures in the “Figures and supplementary Material” folder and the individual tutorials that explain how to create them in the “Walkthrough” folder.
 
 Walkthroughs
 ------------
