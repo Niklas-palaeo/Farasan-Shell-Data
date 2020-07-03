@@ -3,7 +3,7 @@ Shellfish Resilience to Prehistoric Human consumption in the southern Red Sea
 
 This compendium contains the code and data to reproduce some of the figures and statistical data discussed in the article:
 
-`Hausmann, N., Meredith-Williams, M., and Laurie, E. (in review) Shellfish Resilience to Prehistoric Human consumption in the southern Red Sea. Quaternary international`
+`Hausmann, N., Meredith-Williams, M., and Laurie, E. (2020) [Shellfish Resilience to Prehistoric Human consumption in the southern Red Sea. Quaternary international](https://www.sciencedirect.com/science/article/abs/pii/S1040618220301981)`
 
 The data itself is citeable using this [![ DOI](https://zenodo.org/badge/248758954.svg)](https://zenodo.org/badge/latestdoi/248758954)
 
