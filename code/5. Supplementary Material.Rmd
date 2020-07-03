@@ -579,10 +579,11 @@ These figures are simple point+path scatterplots that make use of the ranks for 
 
 ```{r fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
 
-for (i in 1:length(Species$Site)) {
+
+for (i in 1:length(levels(Ranks$Site))) {
   
 PLOT1 <- Ranks %>%
-  filter(Site == Species$Site[i]) %>%
+  filter(Site == levels(Ranks$Site)[i]) %>%
   ggplot(aes(x = rank, y = proportion, group = Site)) +
   geom_path(size = 0.5) +
   geom_point(aes(color = Dominant), show.legend = FALSE) +
@@ -593,7 +594,7 @@ PLOT1 <- Ranks %>%
   theme(strip.text.x = element_text(face = "bold")) + scale_y_log10() +
   xlim(0, 20) + 
   geom_text_repel(
-    data = subset(Ranks[Ranks$Site == Species$Site[i], ], proportion > 1),
+    data = subset(Ranks[Ranks$Site == levels(Ranks$Site)[i], ], proportion > 1),
     aes(label = SpeciesRound, color = factor(SpeciesRound)),
     xlim = c(10, 20),
     colour = viridis_pal()(60)[30],
@@ -606,10 +607,10 @@ PLOT1 <- Ranks %>%
 
 
 
-PLOT1+plot_annotation(title= paste0(Species$Site[i],": Species Ranks"),subtitle = "Only names for species with >2% weight percentage displayed" )
+PLOT1+plot_annotation(title= paste0(levels(Ranks$Site)[i],": Species Ranks"),subtitle = "Only names for species with >2% weight percentage displayed" )
 
 
-ggsave(here(paste0("/Figures and supplementary material/Supplementary Material/3. Species ranks by site/Species_ranks_in_",levels(Aps$Site)[i],".pdf")),height= 10, width = 10)
+ggsave(here(paste0("/Figures and supplementary material/Supplementary Material/3. Species ranks by site/Species_ranks_in_",levels(Ranks$Site)[i],".pdf")),height= 10, width = 10)
 
 }
 
@@ -639,7 +640,7 @@ PLOT1 <- Ranks %>%
     fontface = 'bold'
   )
 
-PLOT1+plot_annotation(title= paste0(Species$Site[i],": Species Ranks"),subtitle = "Only names for species with >2% weight percentage displayed" )
+PLOT1+plot_annotation(title= paste0(levels(Ranks$Site)[i],": Species Ranks"),subtitle = "Only names for species with >2% weight percentage displayed" )
 
 ```
 
