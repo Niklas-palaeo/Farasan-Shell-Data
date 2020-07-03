@@ -11,6 +11,7 @@
 
 <meta name="author" content="Niklas Hausmann" />
 
+<meta name="date" content="2020-01-07" />
 
 <title>Farasan Shell Database</title>
 
@@ -364,22 +365,22 @@ summary {
 
 <h1 class="title toc-ignore">Farasan Shell Database</h1>
 <h4 class="author">Niklas Hausmann</h4>
-<h4 class="date">13/03/2020</h4>
+<h4 class="date">01/07/2020</h4>
 
 </div>
 
 
-<p>#Introduction This file explains the process behind the <code>Farasan Database.R</code> file, which is referred to in the other documents, which carry out the actual analysis and illustration. Is is not essential to understanding the dataset, as none of the data are changed, but it can help to understand how and why the data are structured as they are.</p>
+<p>#Introduction This file explains the process behind the <code>Farasan Database.R</code> file as well as the .csv files for the weight data by species (‘Species.csv’) and aperture sizes by shell (‘Apertures.csv’) that are referred to in the other documents, which carry out the actual analysis and illustration. Is is not essential to understand these steps, as none of the data are being changed, but it can help to understand how and why the data are structured as they are. This document will also not compile the entire dataset, so going through the steps will not produce the final database. You will have to load the .R or .csv files separately, which will be explained in the other documents.</p>
 <div id="packages-used" class="section level2">
 <h2>Packages used</h2>
 <p>Some of the steps below require certain packages to be installed/activated. These are</p>
 <pre class="r"><code>library(magrittr)
-library(purrr)</code></pre>
+library(purrr)
+library(here)</code></pre>
 </div>
 <div id="importing-data-from-.csv-files" class="section level2">
 <h2>Importing data from .csv files</h2>
-<p>All .csv files are located in the folder <em>CSV Exports</em>. So the first step is to set the working directory to that folder. But before you do that, you need to change the file path, so that it fits with where you downloaded this folder. RStudio has an option in the “Files” panel which will tell you the whole command, but you will have to put it into the chunk below as well as wherever it comes up in the walkthroughs. A simple find&amp;replace should do the trick!</p>
-<pre class="r"><code>setwd(&quot;~/Farasan-Shell-Data-master/data/CSV Exports&quot;)</code></pre>
+<p>All .csv files are located in the folder <em>Raw Exports</em>. We ar eusing the ‘here()’ package which will help with the file paths. All files are in the Raw exports folder and you won’t have to navigate much, if you use the Rproject file ‘Farasan.RPoj’</p>
 <p>The steps in the file are all essentially the same process over and over again, and should really be a loop or a function. It just happened to be difficult to make any process work for each .csv file and sometimes special solutions needed to be found, because the .csv files had inconsistent formatting. So now these files are all imported individually. That said, this import will happen in the background without you noticing, so it shouldn’t be a problem.<br />
 The way the main list of data is structured is with the sites on the first level, the bulk sample number on the second level and the samples species as well as basic stats on the third level. That said, there are variation to this main list, which is further described below.</p>
 <table>
@@ -410,12 +411,11 @@ The way the main list of data is structured is with the sites on the first level
 </table>
 <p>Below is an example using the site of JW1864 located in the Janaba West site cluster. Most sites are imported exactly as is described below, but for interested readers it might be worth looking at the steps for other sites as well. If you run the code below, you will get a list of all bulk samples in JW1864 with measurements in grams and the corresponding aperture sizes in mm. The output below the code is the first bulk sample of the site.</p>
 <pre class="r"><code>#Data from Janaba West
-setwd(&quot;~/Farasan-Shell-Data-master/data/CSV Exports&quot;)
 #JW1864####
     #This is the species data
-JW1864 &lt;- read.csv(&quot;JW1864.csv&quot;)
+JW1864 &lt;- read.csv(here(&quot;data/Raw Exports/JW1864.csv&quot;))
     #This is the aperture data
-ApsJW1864&lt;- read.csv(&quot;JW1864-Apertures.csv&quot;)%&gt;%
+ApsJW1864&lt;- read.csv(here(&quot;data/Raw Exports/JW1864-Apertures.csv&quot;))%&gt;%
   na.omit()
     #Species structured as a list
 JW1864 &lt;- nrow(JW1864)%&gt;%
@@ -449,7 +449,9 @@ JW1864[1]</code></pre>
 ##   Unsorted.Residue York.Sample Total.Sample.Weight Sample.Number SHELLWEIGHT
 ## 1             1134      3359.5              3359.5          2956      2224.5</code></pre>
 <p>After the lists for each site have been build, they are combined in several different ways, depending on what was most suitable for the following analyses. First the site-lists are combined into one bay area (e.g. Janaba West),</p>
-<pre class="r"><code>Janaba_West &lt;-
+<pre class="r"><code>TPs &lt;- read.csv(here(&quot;data/Raw Exports/JWTP.csv&quot;))
+
+Janaba_West &lt;- 
   list(#JW0001 to JW0021 are TestPits, which had already been combined into one list
     &quot;JW0001&quot; = TPs[[1]],
     &quot;JW0002&quot; = TPs[[2]],
@@ -471,12 +473,12 @@ JW1864[1]</code></pre>
     &quot;JW0018&quot; = TPs[[18]],
     &quot;JW0019&quot; = TPs[[19]],
     &quot;JW0021&quot; = TPs[[20]],
-    #Here is where the full columns at each site start
+    #Here is where the full columns at each site start and where you will get an error because we didn&#39;t import every site here, only JW1864
+    &quot;JW1864&quot; = JW1864,
     &quot;JW1705&quot; = JW1705,
     &quot;JW1727_A&quot; = JW1727_A,
     &quot;JW1727_B&quot; = JW1727_B,#JW1727 has two columns
     &quot;JW1807&quot; = JW1807,
-    &quot;JW1864&quot; = JW1864,
     &quot;JW2298&quot; = JW2298,
     &quot;JW3120&quot; = JW3120,
     &quot;JW5697&quot; = JW5697
@@ -501,6 +503,7 @@ Apertures &lt;- modify_depth(Apertures,2,~ keep(.x,grepl(Sfas,names(.x))))</code
 <pre class="r"><code>source(&#39;Farasan Database.R&#39;)</code></pre>
 <p>However, due to the nature of the cleaning step at the end of the document, it will remove any other variable in the current environment. This is why the database is sourced at the beginning of each script, when no variables exist yet.<br />
 <strong>Note</strong>: It can happen that some packages prevent the import of data when sourcing <code>Farasan Database.R</code>. This is also why the dataset is sourced prior to activating the packages in the other R scripts. If you run into problem with getting the data imported. Try to restart RStudio and make importing the data the first step.</p>
+<p>Or simply use the csv files ‘Species.csv’ and ‘Apertures.csv’.</p>
 </div>
 
 
