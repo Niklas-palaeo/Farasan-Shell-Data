@@ -76,8 +76,7 @@ Lastly, using the **Janitor** package and `add_totals_col()`, we added the total
 
 library(janitor)
 
-Species <- add_totals_col(Species) %>%
-  rename(Total_weight = Total)
+Species <- adorn_totals(Species, where = "col", name ="Total_weight")
 
 Species %>% 
   select(Site,Total_weight) 
