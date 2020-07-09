@@ -449,11 +449,10 @@ Species[1:6, 1:2]</code></pre>
 ##   Site   `Arca species` `Beguina gubernaculum`
 ##   &lt;chr&gt;           &lt;dbl&gt;                  &lt;dbl&gt;
 ## 1 JW1727          4484.                   2314</code></pre>
-<p>Lastly, using the <strong>Janitor</strong> package and <code>add_totals_col()</code>, we added the total value of all columns with weight values to the end of the dataframe. This is the data you find in Table 1 of the paper.</p>
+<p>Lastly, using the <strong>Janitor</strong> package and <code>adord_totals()</code>, we added the total value of all columns with weight values to the end of the dataframe. This is the data you find in Table 1 of the paper.</p>
 <pre class="r"><code>library(janitor)
 
-Species &lt;- add_totals_col(Species) %&gt;%
-  rename(Total_weight = Total)
+Species &lt;- adorn_totals(Species, where = &quot;col&quot;, name =&quot;Total_weight&quot;)
 
 Species %&gt;% 
   select(Site,Total_weight) </code></pre>
@@ -510,7 +509,10 @@ Species %&gt;%
 <div id="number-of-apertures" class="section level2">
 <h2>Number of Apertures</h2>
 <p>The quite long ‘Aps’ dataframe can be summaries using the <code>summarySE.R</code> function, which we have to source first. You can read up more about this function (here)[<a href="http://www.cookbook-r.com/Graphs/Plotting_means_and_error_bars_(ggplot2)/" class="uri">http://www.cookbook-r.com/Graphs/Plotting_means_and_error_bars_(ggplot2)/</a>].</p>
-<pre class="r"><code>source(here(&quot;/code/summarySE.R&quot;))
+<pre class="r"><code>Aps &lt;- read.csv(here(&quot;data/Apertures.csv&quot;))
+
+
+source(here(&quot;/code/summarySE.R&quot;))
 
 Aps &lt;-summarySE(na.omit(Aps), measurevar = &quot;Aperture&quot;, groupvars = c(&quot;Site&quot;))
 head(Aps)</code></pre>
