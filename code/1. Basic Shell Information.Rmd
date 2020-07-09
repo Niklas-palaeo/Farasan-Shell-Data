@@ -71,7 +71,7 @@ Species <- Species %>%
 Species[27, c(1,7,13)]
 ```
 
-Lastly, using the **Janitor** package and `add_totals_col()`, we added the total value of all columns with weight values to the end of the dataframe. This is the data you find in Table 1 of the paper.
+Lastly, using the **Janitor** package and `adord_totals()`, we added the total value of all columns with weight values to the end of the dataframe. This is the data you find in Table 1 of the paper.
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 
 library(janitor)
