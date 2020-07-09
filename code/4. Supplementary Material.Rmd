@@ -12,13 +12,13 @@ In this file, we describe the process of creating the figures included in the su
 2. **Aperture sizes** by bulk sample compared to changes in **Richness**, **Simpson Index**, and **Percentage of *C. fasciatus***
 3. **Species composition** by weight percentage and ranks on site-level.
 
-The information required to create these figures comes from the `Species.csv` and `Aps.csv` files, which is why we will load these first, together with some additional files, which we used before in the other documents.
+The information required to create these figures comes from the `Species.csv` and `Aps.csv` files, which is why we will load these first, together with some additional files, which we used before in the other documents. If you still have these dataframes open from earlier steps or .Rmd files, please **reload** them again in the chunk below, because some of the next steps expect them to be in the original format and will fail, if that is not the case.
 
 ```{r message=FALSE, warning=FALSE}
 library(here)
 library(tidyverse)
 Aps <- read.csv(here("data/Apertures.csv"))
-Species <- read.csv(here("data/Species.csv"))
+Species <- read.csv(here("data/Species.csv")) #definitely reload this one again.
 
 source(here("code/R_rainclouds.R"))
 source(here("code/summarySE.R"))
@@ -43,7 +43,7 @@ ApsMeans <-  summarySE(na.omit(Aps),
 head(ApsMeans)
 ```
 
-Now that the mean data is available we cnan plot it on top of the individual points. To do this automatically for all sites, we can use a for-loop that repeats as often as the number of sites and that  each time accesses the bulk sample data together with each samples mean value, which we use to draw a line from one sample to another (`PLOT1`). In `PLOT2` we look at the same data, but group them by `Site`. Using the `patchwork` package, we simply add them together, before saving them.
+Now that the mean data is available we can plot it on top of the individual points. To do this automatically for all sites, we can use a for-loop that repeats as often as the number of sites and that  each time accesses the bulk sample data together with each samples mean value, which we use to draw a line from one sample to another (`PLOT1`). In `PLOT2` we look at the same data, but group them by `Site`. Using the `patchwork` package, we simply add them together, before saving them.
 
 
 ```{r fig.height=5, fig.width=3, message=FALSE, warning=FALSE}

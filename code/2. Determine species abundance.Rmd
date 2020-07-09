@@ -43,6 +43,7 @@ Species <- adorn_totals(Species, where = "col", name ="Total_weight")
 For the analysis of the shell species' weight-percentages and their individual ranks (with rank 1 for the most common species) at each site, we make use of the `BiodiversityR`-package. For that we first need to remove the column with site names, because `BiodiversityR` doesn't know what to do with those. For convenience they are moved into the rownames. `BiodiversityR` also requires integers to work. Our dataset uses decimal numbers, so we need to round these weights to the nearest gram to create the dataframe 'SpeciesRound'. 
 
 ```{r}
+library(tidyverse)#in case you skipped the first part
 SpeciesRound <- column_to_rownames(Species,var="Site")
 
 SpeciesRound <- round(SpeciesRound[,1:95])#this step rounds the data and also drops the total weights in the last column of Species
@@ -56,7 +57,7 @@ In the next step, we will determine the ranks for each row (i.e. site) in a for-
 # Either load the whole package
 # library(BiodiversityR)
 # or load the rankabundance() function which is in the code folder
-source('rankabundance.R')
+source(here("code/rankabundance.R"))
 
 Ranks <- data.frame() #main dataframe
 Rank <- data.frame() #single site dataframe used temporarily for each row's loop
@@ -231,12 +232,11 @@ Species <- Species %>%
            mutate(Area = ifelse(grepl("KM", Site),"Khur Maadi",
                   ifelse(grepl("JW", Site), "Janaba West", "Janaba East"))) 
 
-Species <- aggregate(Species[,2:97], by=list(Area=Species$Area), FUN = sum) %>% #this aggregates all weights by Area
-  arrange(desc(Area))
-
-SpeciesRound <- column_to_rownames(Species,var="Area")
-
-SpeciesRound <- round(SpeciesRound[,1:95])
+SpeciesRound <- aggregate(Species[,2:97], by=list(Area=Species$Area), FUN = sum) %>% #this aggregates all weights by Area
+  arrange(desc(Area)) %>% 
+  column_to_rownames(var="Area") %>%
+  select(-Total_weight) %>% 
+  round()
 
 head(SpeciesRound[,c(9,19,20)])
 ```

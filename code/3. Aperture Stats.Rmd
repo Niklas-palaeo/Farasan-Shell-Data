@@ -172,6 +172,7 @@ ggsave(here("Figures and supplementary material/Figure_6.png"),plot=Fig6, height
 For this step we will add the occupation times for each site. This step is done in the `SortApsByDate.R` script and essentially takes the minimum and maximum occupation period for each site and interpolates fictional dates for all bulk samples between the top and the bottom of the sample column. While this is not an ideal approach for analysing parallel changes between sites, they give us an idea of changes through time within individual sites and a rough grouping of data overall. 
 
 ```{r message=FALSE, warning=FALSE}
+library(xts)
 source('SortApsByDate.R')
 
 ApsByDate <- ApsByDate %>% 
