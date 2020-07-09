@@ -5,9 +5,12 @@ date: "01/07/2020"
 output: html_document
 ---
 #Introduction
-This file explains the process behind the `Farasan Database.R` file as well as the .csv files for the weight data by species ('Species.csv') and aperture sizes by shell ('Apertures.csv') that are referred to in the other documents, which carry out the actual analysis and illustration. Is is not essential to understand these steps, as none of the data are being changed, but it can help to understand how and why the data are structured as they are.
-This document will also not compile the entire dataset, so going through the steps will not produce the final database.
-You will have to load the .R or .csv files separately, which will be explained in the other documents.
+This file explains the process behind the `Farasan Database.R` file which includes all the raw field data in an uncleaned format.
+This means that the weights have not been adjusted and the species names are not unified, as they are in the `Species.csv`. Some will have typos and some will look different because they have too many spaces between words. It is ugly but it is the truest form of information which in the future you might want to clean up differently.
+The raw data for each site is found in the .csv files and the steps below explain how they have been combined into one dataset using some of the sites as examples.
+So this document is really just to help understand how and why the data are structured as they are.
+This document will not compile the entire dataset, so going through the steps will not produce the final database. Instead it will produce errors whenever data is required that wasn't produced in the examples.
+
 
 ## Packages used
 Some of the steps below require certain packages to be installed/activated. These are
@@ -20,7 +23,7 @@ library(here)
 
 
 ## Importing data from .csv files
-All .csv files are located in the folder *Raw Exports*. We ar eusing the 'here()' package which will help with the file paths. All files are in the Raw exports folder and you won't have to navigate much, if you use the Rproject file 'Farasan.RPoj'
+All .csv files are located in the folder *Raw Exports*. We are using the 'here()' package which will help with the file paths. All files are in the Raw exports folder and you won't have to navigate much, if you use the Rproject file `Farasan.RPoj`
 
 The steps in the file are all essentially the same process over and over again, and should really be a loop or a function. It just happened to be difficult to make any process work for each .csv file and sometimes special solutions needed to be found, because the .csv files had inconsistent formatting. So now these files are all imported individually. That said, this import will happen in the background without you noticing, so it shouldn't be a problem.  
 The way the main list of data is structured is with the sites on the first level, the bulk sample number on the second level and the samples species as well as basic stats on the third level. That said, there are variation to this main list, which is further described below.

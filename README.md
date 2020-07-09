@@ -11,7 +11,7 @@ The data itself is citeable using this [![ DOI](https://zenodo.org/badge/2487589
 How to run
 ------------------------
 
-I suggest to run the code by downloading the entire repository and executing the steps on your own PC. If you don’t want to run anything yourself, or if there is an error, you can see the finished figures in the “Figures and supplementary Material” folder and the individual tutorials that explain how to create them in the “Walkthrough” folder.
+I suggest to run the code by downloading the entire repository and executing the steps within the .Rmd files in the "code" folder on your own PC. If you don’t want to run anything yourself, or if there is an error, you can see the finished figures in the “Figures and supplementary Material” folder and the individual tutorials that explain how to create them in the “Walkthrough” folder.
 
 Walkthroughs
 ------------
@@ -21,6 +21,7 @@ This repository was created in a rush and by an R enthusiast, rather than an R e
 Farasan Shell Database
 ----------------------
 
-Finally this dataset is a means to make the results of the malacologial analysis of the Farasan shell middens more accessible. It is a rough format that needs tidying up, but there are lots of datasets in here, which remain unstudied. Feel free to have a look around and please get in touch if you have any questions or ideas.
+Finally this dataset is a means to make the results of the malacological analysis of the Farasan shell middens more accessible. It is a rough format that needs tidying up, but there are lots of datasets in here, which remain unstudied. You can access the raw data either through the .csv files in "data/Raw Exports" or by using the `Farasan Database.R` file, which includes the same data as lists and which is described in more detail in `6. Farasan Database.Rmd`.  
+Feel free to have a look around and please get in touch if you have any questions or ideas.
 
 Niklas (niklas@palaeo.eu)
